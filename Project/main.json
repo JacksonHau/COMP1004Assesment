@@ -1,0 +1,22 @@
+{
+  "highScores": [
+    {
+      "playerName": "Player1",
+      "score": 5000,
+      "level": 3,
+      "timestamp": "2023-11-22T12:30:00Z"
+    },
+    {
+      "playerName": "Player2",
+      "score": 4500,
+      "level": 2,
+      "timestamp": "2023-11-21T18:45:00Z"
+    },
+    {
+      "playerName": "Player3",
+      "score": 4000,
+      "level": 1,
+      "timestamp": "2023-11-20T09:15:00Z"
+    }
+  ]
+}
