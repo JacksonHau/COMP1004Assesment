@@ -20,7 +20,7 @@ let keys = {
     ArrowRight: false,
 }
 let player = {
-    speed: 5,
+    speed: 1,
     score: 0,
     highScore: 0
 };
@@ -40,11 +40,14 @@ function keydown(e) {
 function keyup(e) {
     if (e.key === 'w') {
         keys.ArrowUp = false;
-    } else if (e.key === 's') {
+    }
+    else if (e.key === 's') {
         keys.ArrowDown = false;
-    } else if (e.key === 'a') {
+    }
+    else if (e.key === 'a') {
         keys.ArrowLeft = false;
-    } else if (e.key === 'd') {
+    }
+    else if (e.key === 'd') {
         keys.ArrowRight = false;
     }
 }
@@ -69,7 +72,7 @@ function Start() {
     // enemy car
     for (i = 0; i < 3; i++) {
         let EnemyCar1 = document.createElement('div');
-        EnemyCar1.setAttribute('class', 'Enemycar1');
+        EnemyCar1.setAttribute('class', 'EnemyCar1');
         EnemyCar1.y = ((i) * -300);
         EnemyCar1.style.top = EnemyCar1.y + "px";
         gameArea.appendChild(EnemyCar1);
