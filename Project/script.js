@@ -59,6 +59,7 @@ function keyup(e) {
 // starting the game
 function Start() {
     menuScreen.classList.add('hide');
+    gameArea.classList.remove('hide');
     gameArea.innerHTML = "";
     startScreen.classList.add('hide');
     player.isStart = true;
