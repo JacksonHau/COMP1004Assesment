@@ -4,6 +4,17 @@
     font-family: 'Arial', cursive;
 }
 
+#titleGame {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    z-index: 3;
+}
+
 .game {
     background-image: url(background.png);
     background-repeat: no-repeat;
@@ -46,13 +57,13 @@
 
 .instructions {
     position: absolute;
-    top: 450px;
+    top: 600px;
     left: 20px;
     text-align: center;
     background-color: rgb(100, 224, 156);
-    width: 200px;
+    width: 400px;
     color: rgb(59, 40, 40);
-    line-height: 40px;
+    line-height: 30px;
     border-radius: 4px;
     font-size: 1.2em;
 }
@@ -114,15 +125,4 @@
     background-color: white;
     position: absolute;
     margin-left: 195px;
-}
-
-#titleGame {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    font-size: 24px;
-    color: white;
-    z-index: 3; 
 }

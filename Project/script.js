@@ -154,7 +154,7 @@ function isCollide(a, b) {
     return false;
 }
 
-//game is end
+// end game
 function endGame() {
     player.isStart = false;
     player.speed = 5;
