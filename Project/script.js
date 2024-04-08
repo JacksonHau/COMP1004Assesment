@@ -5,13 +5,9 @@ const gameArea = document.querySelector('.gameArea');
 const ClickToStart = document.querySelector('.ClickToStart');
 const grass = document.querySelector('.grass');
 const garden = document.querySelector('.garden');
-const menuScreen = document.querySelector('.menuScreen');
-const playButton = document.querySelector('.playButton');
 ClickToStart.addEventListener('click', Start);
 document.addEventListener('keydown', keydown);
 document.addEventListener('keyup', keyup);
-
-playButton.addEventListener('click', Start);
 
 const backgroundMusic = new Audio("background_music.mp3");
 backgroundMusic.loop = true;
@@ -58,10 +54,13 @@ function keyup(e) {
 
 // starting the game
 function Start() {
-    menuScreen.classList.add('hide');
-    gameArea.classList.remove('hide');
+
+    // Add code to hide the new welcome menu elements for the game
+
     gameArea.innerHTML = "";
     startScreen.classList.add('hide');
+    var title = document.getElementById('titleGame');
+    title.style.display = 'none'; 
     player.isStart = true;
     player.score = 0;
     window.requestAnimationFrame(Play);
