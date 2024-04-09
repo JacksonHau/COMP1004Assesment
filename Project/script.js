@@ -5,6 +5,8 @@ const gameArea = document.querySelector('.gameArea');
 const ClickToStart = document.querySelector('.ClickToStart');
 const grass = document.querySelector('.grass');
 const garden = document.querySelector('.garden');
+const highScoreList = document.querySelector('.highScoreList'); 
+
 ClickToStart.addEventListener('click', Start);
 document.addEventListener('keydown', keydown);
 document.addEventListener('keyup', keyup);
@@ -25,6 +27,7 @@ let player = {
     highScore: 0
 };
 
+let highScores = []; 
 function keydown(e) {
     if (e.key === 'w') {
         keys.ArrowUp = true;
@@ -52,17 +55,42 @@ function keyup(e) {
     }
 }
 
+// Stop background music when there is a crash
+function stopBackgroundMusic() {
+    backgroundMusic.pause();
+}
+
+// Restart background music when game is restarted
+function restartBackgroundMusic() {
+    backgroundMusic.currentTime = 0; 
+    backgroundMusic.play();
+}
+
+// Update and display high scores
+function updateHighScores() {
+    const scoresList = document.createElement('ul');
+    highScores.forEach(score => {
+        const li = document.createElement('li');
+        li.textContent = score;
+        scoresList.appendChild(li);
+    });
+    highScoreList.innerHTML = '';
+    const top5Label = document.createElement('h2');
+    top5Label.textContent = 'Highscores:';
+    highScoreList.appendChild(top5Label); 
+    highScoreList.appendChild(scoresList);
+}
+
 // starting the game
 function Start() {
-
-    // Add code to hide the new welcome menu elements for the game
-
     gameArea.innerHTML = "";
     startScreen.classList.add('hide');
     var title = document.getElementById('titleGame');
-    title.style.display = 'none'; 
+    title.style.display = 'none';
     player.isStart = true;
     player.score = 0;
+    restartBackgroundMusic(); 
+
     window.requestAnimationFrame(Play);
 
     // creating the road lines
@@ -125,6 +153,7 @@ function moveLines() {
         item.style.top = item.y + "px";
     })
 }
+
 function moveEnemyCar1(car) {
     let EnemyCar1 = document.querySelectorAll('.EnemyCar1');
     EnemyCar1.forEach(function (item) {
@@ -148,6 +177,7 @@ function isCollide(a, b) {
     if (!((aRect.top > bRect.bottom) || (aRect.bottom < bRect.top) || (aRect.right < bRect.left) || (aRect.left > bRect.right))) {
         var crashSound = document.getElementById("crashSound");
         crashSound.play();
+        backgroundMusic.pause(); // Pause background music
         return true;
     }
 
@@ -159,4 +189,13 @@ function endGame() {
     player.isStart = false;
     player.speed = 5;
     startScreen.classList.remove('hide');
+    ClickToStart.innerText = "Restart";
+
+    highScores.push(player.score);
+    highScores.sort((a, b) => b - a); 
+    highScores = highScores.slice(0, 5); 
+
+    updateHighScores(); 
 }
+
+updateHighScores();
