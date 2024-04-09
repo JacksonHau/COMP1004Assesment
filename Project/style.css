@@ -19,6 +19,7 @@
     background-image: url(background.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
+    position: relative; /* Added to allow absolute positioning of file controls */
 }
 
 .hide {
@@ -167,4 +168,29 @@
 .highScoreList ul li {
     font-size: 14px;
     margin-bottom: 5px;
+}
+
+.fileControls {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.fileControls button {
+    margin-left: 5px;
+}
+
+#loadButton,
+#saveButton {
+    background-color: rgb(100, 224, 156);
+    color: rgb(0, 0, 0); 
+    border: none; 
+    padding: 5px 10px; 
+    cursor: pointer; 
+    border-radius: 4px; 
+}
+
+#loadButton:hover,
+#saveButton:hover {
+    background-color: rgb(132, 197, 197); 
 }

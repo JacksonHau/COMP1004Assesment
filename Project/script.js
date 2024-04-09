@@ -5,7 +5,8 @@ const gameArea = document.querySelector('.gameArea');
 const ClickToStart = document.querySelector('.ClickToStart');
 const grass = document.querySelector('.grass');
 const garden = document.querySelector('.garden');
-const highScoreList = document.querySelector('.highScoreList'); 
+const highScoreList = document.querySelector('.highScoreList');
+const fileInput = document.getElementById('fileInput');
 
 ClickToStart.addEventListener('click', Start);
 document.addEventListener('keydown', keydown);
@@ -20,14 +21,15 @@ let keys = {
     ArrowDown: false,
     ArrowLeft: false,
     ArrowRight: false,
-}
+};
 let player = {
     speed: 1,
     score: 0,
     highScore: 0
 };
 
-let highScores = []; 
+let highScores = [];
+
 function keydown(e) {
     if (e.key === 'w') {
         keys.ArrowUp = true;
@@ -43,30 +45,24 @@ function keydown(e) {
 function keyup(e) {
     if (e.key === 'w') {
         keys.ArrowUp = false;
-    }
-    else if (e.key === 's') {
+    } else if (e.key === 's') {
         keys.ArrowDown = false;
-    }
-    else if (e.key === 'a') {
+    } else if (e.key === 'a') {
         keys.ArrowLeft = false;
-    }
-    else if (e.key === 'd') {
+    } else if (e.key === 'd') {
         keys.ArrowRight = false;
     }
 }
 
-// Stop background music when there is a crash
 function stopBackgroundMusic() {
     backgroundMusic.pause();
 }
 
-// Restart background music when game is restarted
 function restartBackgroundMusic() {
-    backgroundMusic.currentTime = 0; 
+    backgroundMusic.currentTime = 0;
     backgroundMusic.play();
 }
 
-// Update and display high scores
 function updateHighScores() {
     const scoresList = document.createElement('ul');
     highScores.forEach(score => {
@@ -77,11 +73,10 @@ function updateHighScores() {
     highScoreList.innerHTML = '';
     const top5Label = document.createElement('h2');
     top5Label.textContent = 'Highscores:';
-    highScoreList.appendChild(top5Label); 
+    highScoreList.appendChild(top5Label);
     highScoreList.appendChild(scoresList);
 }
 
-// starting the game
 function Start() {
     gameArea.innerHTML = "";
     startScreen.classList.add('hide');
@@ -89,11 +84,10 @@ function Start() {
     title.style.display = 'none';
     player.isStart = true;
     player.score = 0;
-    restartBackgroundMusic(); 
+    restartBackgroundMusic();
 
     window.requestAnimationFrame(Play);
 
-    // creating the road lines
     for (i = 0; i < 5; i++) {
         let roadLines = document.createElement('div');
         roadLines.setAttribute('class', 'roadLines');
@@ -102,7 +96,6 @@ function Start() {
         gameArea.appendChild(roadLines);
     }
 
-    // enemy car
     for (i = 0; i < 3; i++) {
         let EnemyCar1 = document.createElement('div');
         EnemyCar1.setAttribute('class', 'EnemyCar1');
@@ -118,7 +111,6 @@ function Start() {
     player.y = car.offsetTop;
 }
 
-//play the game
 function Play() {
     let car = document.querySelector('.car');
     let road = gameArea.getBoundingClientRect();
@@ -131,12 +123,12 @@ function Play() {
         if (keys.ArrowLeft && player.x > 0) { player.x -= player.speed }
         car.style.top = player.y + "px";
         car.style.left = player.x + "px";
-        highScore.innerHTML = "HighScore" + ":" + (player.highScore - 1);
+        highScore.innerHTML = "High Score" + ":" + (player.highScore - 1);
         player.score++;
         player.speed += 0.01;
         if (player.highScore < player.score) {
             player.highScore++;
-            highScore.innerHTML = "HighScore" + ":" + (player.highScore - 1);
+            highScore.innerHTML = "High Score" + ":" + (player.highScore - 1);
             highScore.style.top = "80px";
         }
         score.innerHTML = "Score" + ":" + (player.score - 1);
@@ -169,7 +161,6 @@ function moveEnemyCar1(car) {
     })
 }
 
-//check whether the cars collide or not
 function isCollide(a, b) {
     aRect = a.getBoundingClientRect();
     bRect = b.getBoundingClientRect();
@@ -177,14 +168,13 @@ function isCollide(a, b) {
     if (!((aRect.top > bRect.bottom) || (aRect.bottom < bRect.top) || (aRect.right < bRect.left) || (aRect.left > bRect.right))) {
         var crashSound = document.getElementById("crashSound");
         crashSound.play();
-        backgroundMusic.pause(); // Pause background music
+        backgroundMusic.pause();
         return true;
     }
 
     return false;
 }
 
-// end game
 function endGame() {
     player.isStart = false;
     player.speed = 5;
@@ -192,10 +182,39 @@ function endGame() {
     ClickToStart.innerText = "Restart";
 
     highScores.push(player.score);
-    highScores.sort((a, b) => b - a); 
-    highScores = highScores.slice(0, 5); 
+    highScores.sort((a, b) => b - a);
+    highScores = highScores.slice(0, 5);
 
-    updateHighScores(); 
+    updateHighScores();
 }
 
+// Load button click event handler
+document.getElementById('loadButton').addEventListener('click', function () {
+    fileInput.click();
+});
+
+// Save button click event handler
+document.getElementById('saveButton').addEventListener('click', function () {
+    const jsonData = JSON.stringify(highScores);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'highScores.json';
+    link.click();
+});
+
+// Function to handle loading scores from a JSON file
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const content = e.target.result;
+        highScores = JSON.parse(content);
+        updateHighScores();
+    };
+    reader.readAsText(file);
+}
+
+fileInput.addEventListener('change', handleFileSelect);
 updateHighScores();
