@@ -16,6 +16,8 @@ const backgroundMusic = new Audio("background_music.mp3");
 backgroundMusic.loop = true;
 backgroundMusic.play();
 
+const crashSound = document.getElementById("crashSound");
+
 let keys = {
     ArrowUp: false,
     ArrowDown: false,
@@ -31,25 +33,25 @@ let player = {
 let highScores = [];
 
 function keydown(e) {
-    if (e.key === 'w' || e.key === 'ArrowUp') {
+    if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
         keys.ArrowUp = true;
-    } else if (e.key === 's' || e.key === 'ArrowDown') {
+    } else if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') {
         keys.ArrowDown = true;
-    } else if (e.key === 'a' || e.key === 'ArrowLeft') {
+    } else if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') {
         keys.ArrowLeft = true;
-    } else if (e.key === 'd' || e.key === 'ArrowRight') {
+    } else if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') {
         keys.ArrowRight = true;
     }
 }
 
 function keyup(e) {
-    if (e.key === 'w' || e.key === 'ArrowUp') {
+    if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp') {
         keys.ArrowUp = false;
-    } else if (e.key === 's' || e.key === 'ArrowDown') {
+    } else if (e.key === 's' || e.key === 'S' || e.key === 'ArrowDown') {
         keys.ArrowDown = false;
-    } else if (e.key === 'a' || e.key === 'ArrowLeft') {
+    } else if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') {
         keys.ArrowLeft = false;
-    } else if (e.key === 'd' || e.key === 'ArrowRight') {
+    } else if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') {
         keys.ArrowRight = false;
     }
 }
@@ -117,10 +119,11 @@ function Play() {
     if (player.isStart) {
         moveLines();
         moveEnemyCar1(car);
-        if (keys.ArrowUp && player.y > (road.top + 70)) { player.y -= player.speed }
-        if (keys.ArrowDown && player.y < (road.height - 75)) { player.y += player.speed }
-        if (keys.ArrowRight && player.x < 350) { player.x += player.speed }
-        if (keys.ArrowLeft && player.x > 0) { player.x -= player.speed }
+        if ((keys.ArrowUp || keys.ArrowDown || keys.ArrowRight || keys.ArrowLeft) && player.y > (road.top + 70)) { }
+        if (keys.ArrowUp && player.y > (road.top + 70)) { player.y -= player.speed; }
+        if (keys.ArrowDown && player.y < (road.height - 75)) { player.y += player.speed; }
+        if (keys.ArrowRight && player.x < 350) { player.x += player.speed; }
+        if (keys.ArrowLeft && player.x > 0) { player.x -= player.speed; }
         car.style.top = player.y + "px";
         car.style.left = player.x + "px";
         highScore.innerHTML = "High Score" + ":" + (player.highScore - 1);
@@ -166,7 +169,6 @@ function isCollide(a, b) {
     bRect = b.getBoundingClientRect();
 
     if (!((aRect.top > bRect.bottom) || (aRect.bottom < bRect.top) || (aRect.right < bRect.left) || (aRect.left > bRect.right))) {
-        var crashSound = document.getElementById("crashSound");
         crashSound.play();
         backgroundMusic.pause();
         return true;
