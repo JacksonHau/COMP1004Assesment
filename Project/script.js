@@ -99,21 +99,13 @@ function Start() {
     }
 
     for (let i = 0; i < 3; i++) {
-        let enemyCar1 = document.createElement('div');
-        enemyCar1.setAttribute('class', 'EnemyCar1');
-        enemyCar1.y = ((i) * -300);
-        enemyCar1.style.top = enemyCar1.y + "px";
-        gameArea.appendChild(enemyCar1);
-        enemyCar1.style.left = Math.floor(Math.random() * 350) + "px";
-    }
-
-    for (let i = 0; i < 2; i++) {
-        let enemyCar2 = document.createElement('div');
-        enemyCar2.setAttribute('class', 'EnemyCar2');
-        enemyCar2.y = ((i) * -500);
-        enemyCar2.style.top = enemyCar2.y + "px";
-        gameArea.appendChild(enemyCar2);
-        enemyCar2.style.left = Math.floor(Math.random() * 350) + "px";
+        let enemyCarType = Math.floor(Math.random() * 3) + 1; // Randomly select car type
+        let enemyCar = document.createElement('div');
+        enemyCar.setAttribute('class', 'EnemyCar' + enemyCarType);
+        enemyCar.y = ((i) * -300);
+        enemyCar.style.top = enemyCar.y + "px";
+        gameArea.appendChild(enemyCar);
+        enemyCar.style.left = Math.floor(Math.random() * 350) + "px";
     }
 
     let car = document.createElement('div');
@@ -160,31 +152,22 @@ function moveLines() {
 }
 
 function moveEnemyCars(car) {
-    let enemyCars1 = document.querySelectorAll('.EnemyCar1');
-    enemyCars1.forEach(function (enemyCar1) {
-        if (isCollide(car, enemyCar1)) {
-            endGame();
-        }
-        if (enemyCar1.y >= 750) {
-            enemyCar1.y -= 900;
-            enemyCar1.style.left = Math.floor(Math.random() * 350) + "px";
-        }
-        enemyCar1.y += player.speed;
-        enemyCar1.style.top = enemyCar1.y + "px";
+    let enemyCars = document.querySelectorAll('.EnemyCar1, .EnemyCar2, .EnemyCar3');
+    enemyCars.forEach(function (item) {
+        moveEnemyCar(item, car);
     });
+}
 
-    let enemyCars2 = document.querySelectorAll('.EnemyCar2');
-    enemyCars2.forEach(function (enemyCar2) {
-        if (isCollide(car, enemyCar2)) {
-            endGame();
-        }
-        if (enemyCar2.y >= 750) {
-            enemyCar2.y -= 900;
-            enemyCar2.style.left = Math.floor(Math.random() * 350) + "px";
-        }
-        enemyCar2.y += player.speed;
-        enemyCar2.style.top = enemyCar2.y + "px";
-    });
+function moveEnemyCar(car, playerCar) {
+    if (isCollide(playerCar, car)) {
+        endGame();
+    }
+    if (car.y >= 750) {
+        car.y -= 900;
+        car.style.left = Math.floor(Math.random() * 350) + "px";
+    }
+    car.y += player.speed;
+    car.style.top = car.y + "px";
 }
 
 function isCollide(a, b) {
