@@ -99,7 +99,7 @@ function Start() {
     }
 
     for (let i = 0; i < 3; i++) {
-        let enemyCarType = Math.floor(Math.random() * 3) + 1; // Randomly select car type
+        let enemyCarType = Math.floor(Math.random() * 3) + 1; 
         let enemyCar = document.createElement('div');
         enemyCar.setAttribute('class', 'EnemyCar' + enemyCarType);
         enemyCar.y = ((i) * -300);
