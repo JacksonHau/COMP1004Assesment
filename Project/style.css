@@ -19,7 +19,7 @@
     background-image: url(background.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    position: relative; /* Added to allow absolute positioning of file controls */
+    position: relative; 
 }
 
 .hide {
@@ -78,7 +78,7 @@
     left: 20px;
     text-align: center;
     background-color: rgb(100, 224, 156);
-    width: 400px;
+    width: 350px;
     color: rgb(59, 40, 40);
     line-height: 30px;
     border-radius: 4px;

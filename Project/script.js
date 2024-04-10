@@ -31,25 +31,25 @@ let player = {
 let highScores = [];
 
 function keydown(e) {
-    if (e.key === 'w') {
+    if (e.key === 'w' || e.key === 'ArrowUp') {
         keys.ArrowUp = true;
-    } else if (e.key === 's') {
+    } else if (e.key === 's' || e.key === 'ArrowDown') {
         keys.ArrowDown = true;
-    } else if (e.key === 'a') {
+    } else if (e.key === 'a' || e.key === 'ArrowLeft') {
         keys.ArrowLeft = true;
-    } else if (e.key === 'd') {
+    } else if (e.key === 'd' || e.key === 'ArrowRight') {
         keys.ArrowRight = true;
     }
 }
 
 function keyup(e) {
-    if (e.key === 'w') {
+    if (e.key === 'w' || e.key === 'ArrowUp') {
         keys.ArrowUp = false;
-    } else if (e.key === 's') {
+    } else if (e.key === 's' || e.key === 'ArrowDown') {
         keys.ArrowDown = false;
-    } else if (e.key === 'a') {
+    } else if (e.key === 'a' || e.key === 'ArrowLeft') {
         keys.ArrowLeft = false;
-    } else if (e.key === 'd') {
+    } else if (e.key === 'd' || e.key === 'ArrowRight') {
         keys.ArrowRight = false;
     }
 }
@@ -188,12 +188,10 @@ function endGame() {
     updateHighScores();
 }
 
-// Load button click event handler
 document.getElementById('loadButton').addEventListener('click', function () {
     fileInput.click();
 });
 
-// Save button click event handler
 document.getElementById('saveButton').addEventListener('click', function () {
     const jsonData = JSON.stringify(highScores);
     const blob = new Blob([jsonData], { type: 'application/json' });
@@ -204,7 +202,6 @@ document.getElementById('saveButton').addEventListener('click', function () {
     link.click();
 });
 
-// Function to handle loading scores from a JSON file
 function handleFileSelect(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
