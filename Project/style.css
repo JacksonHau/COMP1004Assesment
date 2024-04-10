@@ -136,6 +136,16 @@
     top: 520px;
 }
 
+.EnemyCar2 {
+    background: url(greencar.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 75px;
+    width: 40px;
+    position: absolute;
+    top: 520px;
+}
+
 .roadLines {
     height: 100px;
     width: 10px;
